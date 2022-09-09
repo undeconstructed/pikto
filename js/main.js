@@ -262,6 +262,9 @@ main(function ({ window, document, localStorage }) {
       }
       w = chosen.splice(0, 1)[0] || notgot.splice(0, 1)[0]
       if (!w) {
+        if (to) {
+          clearTimeout(to)
+        }
         end()
         return
       }
@@ -275,6 +278,7 @@ main(function ({ window, document, localStorage }) {
       clock.textContent = time
     }
 
+    let to = null
     let time = howlong
     setClock()
     let tick = () => {
@@ -285,11 +289,11 @@ main(function ({ window, document, localStorage }) {
         eAudio.play()
       } else {
         setClock()
-        setTimeout(tick, 1000)
+        to = setTimeout(tick, 1000)
       }
     }
     change()
-    setTimeout(tick, 1000)
+    to = setTimeout(tick, 1000)
   }
 
   let reset = e => {
